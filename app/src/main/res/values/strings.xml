@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TestTask</string>
+    <string name="prime_numbers">Простые</string>
+    <string name="fibonacci_numbers">Фибоначчи</string>
+</resources>
