@@ -1,8 +1,8 @@
 package ru.elgreed.testtask.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -12,14 +12,13 @@ import ru.elgreed.testtask.model.PrimeNumbersModel
 import ru.elgreed.testtask.viewmodel.NumbersViewModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var adapter : NumbersAdapter
-    private lateinit var binding : ActivityMainBinding
+    private val adapter: NumbersAdapter by lazy { NumbersAdapter(applicationContext) }
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val viewModel : NumbersViewModel by viewModels()
+        val viewModel: NumbersViewModel by viewModels()
         creteRecyclerView(viewModel)
         setListeners(viewModel)
     }
@@ -35,13 +34,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun creteRecyclerView(viewModel: NumbersViewModel) {
-        adapter = NumbersAdapter(applicationContext)
         binding.recyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
         observeLifeData(viewModel)
     }
 
-    private fun observeLifeData(viewModel: NumbersViewModel)
-    {
+    private fun observeLifeData(viewModel: NumbersViewModel) {
         viewModel.numberList.observe(this, Observer(adapter::submitList))
         binding.recyclerView.adapter = adapter
     }

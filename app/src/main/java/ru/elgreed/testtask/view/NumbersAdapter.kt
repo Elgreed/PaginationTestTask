@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.elgreed.testtask.R
 import ru.elgreed.testtask.databinding.NumberItemBinding
 
-class NumbersAdapter(var context: Context) : PagedListAdapter<Long, NumbersAdapter.ViewHolder>(DIFF_CALLBACK) {
-
-
+class NumbersAdapter(val context: Context) : PagedListAdapter<Long, NumbersAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = NumberItemBinding.inflate(LayoutInflater.from(parent.context))
@@ -29,26 +27,21 @@ class NumbersAdapter(var context: Context) : PagedListAdapter<Long, NumbersAdapt
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(var binding: NumberItemBinding) : RecyclerView.ViewHolder(binding.root)
-    {
-        private fun containerColor()
-        {
+    inner class ViewHolder(var binding: NumberItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        private fun containerColor() {
             val row = (adapterPosition / 2)
             val column = adapterPosition % 2
 
-            if((row+column) % 2 == 0)
-            {
+            if ((row + column) % 2 == 0) {
                 binding.numberContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
                 binding.numberTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-            }
-            else
-            {
+            } else {
                 binding.numberContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
                 binding.numberTextView.setTextColor(ContextCompat.getColor(context, R.color.grey))
             }
         }
-        fun bind(number: Long?)
-        {
+
+        fun bind(number: Long?) {
             binding.numberTextView.text = number.toString()
             containerColor()
         }
@@ -56,9 +49,9 @@ class NumbersAdapter(var context: Context) : PagedListAdapter<Long, NumbersAdapt
 
     companion object {
         private val DIFF_CALLBACK = object :
-            DiffUtil.ItemCallback<Long>() {
+                DiffUtil.ItemCallback<Long>() {
             override fun areItemsTheSame(oldItem: Long, newItem: Long): Boolean {
-               return oldItem == newItem
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: Long, newItem: Long): Boolean {
